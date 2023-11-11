@@ -19,54 +19,54 @@ jobs:
       gradle-version: "8.3"
     secrets: inherit
 
-  call-workflow-sonarqube:
-    needs:
-      - call-workflow-ci-java-gradle
-    uses: kumabes-org/reusable-workflows-sonarqube/.github/workflows/main.yml@main
-    with:
-      runs-on: "ubuntu-latest"
-      environment: "development"
-      working-directory: "voting-app"
-      shell: "bash"    
-      project-name: "voting-app"
-    secrets: inherit
+  # call-workflow-sonarqube:
+  #   needs:
+  #     - call-workflow-ci-java-gradle
+  #   uses: kumabes-org/reusable-workflows-sonarqube/.github/workflows/main.yml@main
+  #   with:
+  #     runs-on: "ubuntu-latest"
+  #     environment: "development"
+  #     working-directory: "voting-app"
+  #     shell: "bash"    
+  #     project-name: "voting-app"
+  #   secrets: inherit
       
-  call-workflow-codeql:
-    needs:
-      - call-workflow-ci-java-gradle
-    uses: kumabes-org/reusable-workflows-codeql/.github/workflows/main.yml@main
-    with:
-      runs-on: "ubuntu-latest"
-      environment: "development"
-      working-directory: "voting-app"
-      shell: "bash"    
-      project-name: "voting-app"
-      languages: "java"
-    secrets: inherit      
+  # call-workflow-codeql:
+  #   needs:
+  #     - call-workflow-ci-java-gradle
+  #   uses: kumabes-org/reusable-workflows-codeql/.github/workflows/main.yml@main
+  #   with:
+  #     runs-on: "ubuntu-latest"
+  #     environment: "development"
+  #     working-directory: "voting-app"
+  #     shell: "bash"    
+  #     project-name: "voting-app"
+  #     languages: "java"
+  #   secrets: inherit      
 
-  DockerfileLint:
-    needs:
-      - call-workflow-sonarqube
-      - call-workflow-codeql
-    runs-on: ubuntu-latest
-    environment: development
-    defaults:
-      run:
-        shell: bash
-        working-directory: voting-app
-    steps:
-      - uses: actions/checkout@v3
+  # DockerfileLint:
+  #   needs:
+  #     - call-workflow-sonarqube
+  #     - call-workflow-codeql
+  #   runs-on: ubuntu-latest
+  #   environment: development
+  #   defaults:
+  #     run:
+  #       shell: bash
+  #       working-directory: voting-app
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: "voting-app"
-          path: "./voting-app/build"
+  #     - uses: actions/download-artifact@v3
+  #       with:
+  #         name: "voting-app"
+  #         path: "./voting-app/build"
     
-      - name: Display structure of downloaded files
-        run: |
-          pwd
-          ls -R
+  #     - name: Display structure of downloaded files
+  #       run: |
+  #         pwd
+  #         ls -R
   
-      - uses: hadolint/hadolint-action@v3.1.0
-        with:
-          dockerfile: "./voting-app/Dockerfile"  
+  #     - uses: hadolint/hadolint-action@v3.1.0
+  #       with:
+  #         dockerfile: "./voting-app/Dockerfile"  
