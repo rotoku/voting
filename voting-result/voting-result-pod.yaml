@@ -10,4 +10,4 @@ spec:
     - name: voting-result
       image: rotoku/voting-result:v1
       ports:
-        - containerPort: 80
+        - containerPort: 8080
