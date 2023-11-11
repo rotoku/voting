@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +37,7 @@ public class VotingAppController {
 	}
 	
 	@PostMapping
-	public ModelAndView create(@ModelAttribute FormPreferredLanguageDTO formPreferredLanguageDTO) {
+	public ModelAndView create(@ModelAttribute FormPreferredLanguageDTO formPreferredLanguageDTO, ModelMap model) {
 		String language = formPreferredLanguageDTO.getLanguage();
 		LOGGER.info("Voto para a linguagem: {}", language);
 		String key = language;
@@ -49,8 +50,8 @@ public class VotingAppController {
 			value = actual;
 		}
 		votingAppService.create(key, value);
-		ModelAndView modelAndView = new ModelAndView("redirect:/success");
-		modelAndView.addObject("language", language);
+		model.addAttribute("language", language);
+		ModelAndView modelAndView = new ModelAndView("redirect:/success", model);		
 		return modelAndView;
 	}
 	
