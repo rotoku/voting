@@ -20,6 +20,8 @@ jobs:
     secrets: inherit
 
   DockerfileLint:
+    needs:
+      - call-workflow-ci-java-gradle    
     runs-on: ubuntu-latest
     environment: development
     defaults:
@@ -28,10 +30,20 @@ jobs:
         working-directory: "voting-app"        
     steps:
       - uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: "voting-app"
+    
+      - name: Display structure of downloaded files
+        run: |
+          pwd
+          ls -lrth --color
+  
       - uses: hadolint/hadolint-action@v3.1.0
         with:
           dockerfile: Dockerfile
-          
+
   # call-workflow-sonarqube:
   #   needs:
   #     - call-workflow-ci-java-gradle
