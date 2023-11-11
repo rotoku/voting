@@ -39,7 +39,7 @@ jobs:
       - name: Display structure of downloaded files
         run: |
           pwd
-          ls -lrth --color
+          ls -lrth --color ./build/libs/
   
       - uses: hadolint/hadolint-action@v3.1.0
         with:
