@@ -18,7 +18,20 @@ jobs:
       java-version: "17"
       gradle-version: "8.3"
     secrets: inherit
-      
+
+  DockerfileLint:
+    runs-on: ubuntu-latest
+    environment: development
+    defaults:
+      run:
+        shell: bash
+        working-directory: "voting-app"        
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+          
   # call-workflow-sonarqube:
   #   needs:
   #     - call-workflow-ci-java-gradle
