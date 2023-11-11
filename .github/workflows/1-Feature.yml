@@ -11,7 +11,7 @@ jobs:
     with:
       runs-on: "ubuntu-latest"
       environment: "development"
-      working-directory: "./voting-app"
+      working-directory: "voting-app"
       shell: "bash"
       project-name: "voting-app"
       java-distribution: "zulu"
@@ -26,20 +26,20 @@ jobs:
     with:
       runs-on: "ubuntu-latest"
       environment: "development"
-      working-directory: "./voting-app"
+      working-directory: "voting-app"
       shell: "bash"    
       project-name: "voting-app"
     secrets: inherit
       
-        # call-workflow-codeql:
-        #   needs:
-        #     - call-workflow-ci-java-gradle
-        #   uses: kumabes-org/reusable-workflows-codeql/.github/workflows/main.yml@main
-        #   with:
-        #     runs-on: "ubuntu-latest"
-        #     environment: "production"
-        #     working-directory: "app"
-        #     shell: "bash"    
-        #     project-name: "java-gradle-springboot-application"
-        #     languages: "java"
-        #   secrets: inherit      
+  call-workflow-codeql:
+    needs:
+      - call-workflow-ci-java-gradle
+    uses: kumabes-org/reusable-workflows-codeql/.github/workflows/main.yml@main
+    with:
+      runs-on: "ubuntu-latest"
+      environment: "development"
+      working-directory: "voting-app"
+      shell: "bash"    
+      project-name: "voting-app"
+      languages: "java"
+    secrets: inherit      

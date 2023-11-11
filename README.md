@@ -27,8 +27,12 @@ Página que exibe o resultado sumarizado da votação
 
 ### troubleshooting com scripts e wrappers
 ```
-cd .//voting-app
+cd ./voting-app
 ls -lrth ./gradle*
 git update-index --chmod=+x ./gradlew
 git update-index --chmod=+x ./gradlew.bat
+cd ../
+git add .
+git commit -m "<Message>"
+git push
 ```
