@@ -44,29 +44,32 @@ jobs:
   #     languages: "java"
   #   secrets: inherit      
 
-  # DockerfileLint:
-  #   needs:
-  #     - call-workflow-sonarqube
-  #     - call-workflow-codeql
-  #   runs-on: ubuntu-latest
-  #   environment: development
-  #   defaults:
-  #     run:
-  #       shell: bash
-  #       working-directory: voting-app
-  #   steps:
-  #     - uses: actions/checkout@v3
+  Build-Docker:
+    needs:
+      - call-workflow-ci-java-gradle
+    runs-on: ubuntu-latest
+    environment: development
+    defaults:
+      run:
+        shell: bash
+        working-directory: voting-app
+    steps:
+      - uses: actions/checkout@v3
 
-  #     - uses: actions/download-artifact@v3
-  #       with:
-  #         name: "voting-app"
-  #         path: "./voting-app/build"
+      - uses: actions/download-artifact@v3
+        with:
+          name: "voting-app"
+          path: "./voting-app/build"
     
-  #     - name: Display structure of downloaded files
-  #       run: |
-  #         pwd
-  #         ls -R
+      - name: Display structure of downloaded files
+        run: |
+          pwd
+          ls -R
   
-  #     - uses: hadolint/hadolint-action@v3.1.0
-  #       with:
-  #         dockerfile: "./voting-app/Dockerfile"  
+      - uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: "./voting-app/Dockerfile"
+
+      - name: Docker version  
+        run: |
+          docker --version
