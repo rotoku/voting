@@ -34,7 +34,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: "voting-app"
-          path: "./voting-app"
+          path: "./voting-app/build"
     
       - name: Display structure of downloaded files
         run: |
