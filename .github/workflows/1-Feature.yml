@@ -27,7 +27,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: "voting-app"        
+        working-directory: voting-app
     steps:
       - uses: actions/checkout@v3
 
@@ -43,7 +43,7 @@ jobs:
   
       - uses: hadolint/hadolint-action@v3.1.0
         with:
-          dockerfile: Dockerfile
+          dockerfile: "./voting-app/Dockerfile"
 
   # call-workflow-sonarqube:
   #   needs:
