@@ -7,7 +7,6 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.kumabe.votingapp.dtos.FormPreferredLanguageDTO;
