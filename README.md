@@ -1,5 +1,7 @@
 # voting
 
+![Feature Branch](https://github.com/kumabes-org/voting/actions/workflows/1-Feature.yml/badge.svg)
+
 ## 1. voting-queue
 Fila responsável por receber as informações recebidas do formulário
 
