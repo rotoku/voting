@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.kumabe.votingapp.dtos.FormPreferredLanguageDTO;
@@ -40,7 +41,7 @@ public class VotingAppControllerTests {
 		String language = "java";
 		formPreferredLanguageDTO.setLanguage(language);
 		when(votingAppService.retrieve(language)).thenReturn(10L);
-		ModelAndView modelAndView = this.votingAppController.create(formPreferredLanguageDTO);
+		ModelAndView modelAndView = this.votingAppController.create(formPreferredLanguageDTO, new ModelMap());
 		assertNotNull(modelAndView);
 	}
 }
