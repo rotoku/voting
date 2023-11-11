@@ -37,7 +37,7 @@ public class VotingAppController {
 	}
 	
 	@PostMapping
-	public ModelAndView create(@ModelAttribute FormPreferredLanguageDTO formPreferredLanguageDTO, ModelMap model) {
+	public ModelAndView create(@ModelAttribute FormPreferredLanguageDTO formPreferredLanguageDTO) {
 		String language = formPreferredLanguageDTO.getLanguage();
 		LOGGER.info("Voto para a linguagem: {}", language);
 		String key = language;
@@ -50,8 +50,7 @@ public class VotingAppController {
 			value = actual;
 		}
 		votingAppService.create(key, value);
-		model.addAttribute("language", language);
-		ModelAndView modelAndView = new ModelAndView("redirect:/success", model);		
+		ModelAndView modelAndView = new ModelAndView("redirect:/success");		
 		return modelAndView;
 	}
 	

@@ -41,7 +41,7 @@ public class VotingAppControllerTests {
 		String language = "java";
 		formPreferredLanguageDTO.setLanguage(language);
 		when(votingAppService.retrieve(language)).thenReturn(10L);
-		ModelAndView modelAndView = this.votingAppController.create(formPreferredLanguageDTO, new ModelMap());
+		ModelAndView modelAndView = this.votingAppController.create(formPreferredLanguageDTO);
 		assertNotNull(modelAndView);
 	}
 }
