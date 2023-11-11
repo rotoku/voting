@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: voting-result-deploy
+  labels:
+    name: voting-result-deploy
+    app: demo-voting-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: voting-result-pod
+      app: demo-voting-app      
+  template:
+    metadata:
+      name: voting-result-pod
+      labels:
+        name: voting-result-pod
+        app: demo-voting-app
+    spec:
+      containers:
+        - name: voting-result
+          image: rotoku/voting-result:v1
+          ports:
+            - containerPort: 80  

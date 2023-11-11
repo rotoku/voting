@@ -1,0 +1,45 @@
+name: "1-Feature"
+
+on:
+  push:
+    branches:
+      - "feature**"
+
+jobs:
+  call-workflow-ci-java-gradle:
+    uses: kumabes-org/reusable-workflows-ci-java-gradle/.github/workflows/ci.yml@main
+    with:
+      runs-on: "ubuntu-latest"
+      environment: "development"
+      working-directory: "./voting-app"
+      shell: "bash"
+      project-name: "voting-app"
+      java-distribution: "zulu"
+      java-version: "17"
+      gradle-version: "8.3"
+    secrets: inherit
+      
+  call-workflow-sonarqube:
+    needs:
+      - call-workflow-ci-java-gradle
+    uses: kumabes-org/reusable-workflows-sonarqube/.github/workflows/main.yml@main
+    with:
+      runs-on: "ubuntu-latest"
+      environment: "development"
+      working-directory: "./voting-app"
+      shell: "bash"    
+      project-name: "voting-app"
+    secrets: inherit
+      
+        # call-workflow-codeql:
+        #   needs:
+        #     - call-workflow-ci-java-gradle
+        #   uses: kumabes-org/reusable-workflows-codeql/.github/workflows/main.yml@main
+        #   with:
+        #     runs-on: "ubuntu-latest"
+        #     environment: "production"
+        #     working-directory: "app"
+        #     shell: "bash"    
+        #     project-name: "java-gradle-springboot-application"
+        #     languages: "java"
+        #   secrets: inherit      
