@@ -19,9 +19,35 @@ jobs:
       gradle-version: "8.3"
     secrets: inherit
 
+  call-workflow-sonarqube:
+    needs:
+      - call-workflow-ci-java-gradle
+    uses: kumabes-org/reusable-workflows-sonarqube/.github/workflows/main.yml@main
+    with:
+      runs-on: "ubuntu-latest"
+      environment: "development"
+      working-directory: "voting-app"
+      shell: "bash"    
+      project-name: "voting-app"
+    secrets: inherit
+      
+  call-workflow-codeql:
+    needs:
+      - call-workflow-ci-java-gradle
+    uses: kumabes-org/reusable-workflows-codeql/.github/workflows/main.yml@main
+    with:
+      runs-on: "ubuntu-latest"
+      environment: "development"
+      working-directory: "voting-app"
+      shell: "bash"    
+      project-name: "voting-app"
+      languages: "java"
+    secrets: inherit      
+
   DockerfileLint:
     needs:
-      - call-workflow-ci-java-gradle    
+      - call-workflow-sonarqube
+      - call-workflow-codeql
     runs-on: ubuntu-latest
     environment: development
     defaults:
@@ -43,29 +69,4 @@ jobs:
   
       - uses: hadolint/hadolint-action@v3.1.0
         with:
-          dockerfile: "./voting-app/Dockerfile"
-
-  # call-workflow-sonarqube:
-  #   needs:
-  #     - call-workflow-ci-java-gradle
-  #   uses: kumabes-org/reusable-workflows-sonarqube/.github/workflows/main.yml@main
-  #   with:
-  #     runs-on: "ubuntu-latest"
-  #     environment: "development"
-  #     working-directory: "voting-app"
-  #     shell: "bash"    
-  #     project-name: "voting-app"
-  #   secrets: inherit
-      
-  # call-workflow-codeql:
-  #   needs:
-  #     - call-workflow-ci-java-gradle
-  #   uses: kumabes-org/reusable-workflows-codeql/.github/workflows/main.yml@main
-  #   with:
-  #     runs-on: "ubuntu-latest"
-  #     environment: "development"
-  #     working-directory: "voting-app"
-  #     shell: "bash"    
-  #     project-name: "voting-app"
-  #     languages: "java"
-  #   secrets: inherit      
+          dockerfile: "./voting-app/Dockerfile"  
