@@ -18,3 +18,17 @@ Formulário contento as opções das linguagens na qual o usuário utiliza
 
 ## 5. voting-result
 Página que exibe o resultado sumarizado da votação
+
+
+### Environments
+- development
+- homologation
+- production
+
+### troubleshooting com scripts e wrappers
+```
+cd .//voting-app
+ls -lrth ./gradle*
+git update-index --chmod=+x ./gradlew
+git update-index --chmod=+x ./gradlew.bat
+```
