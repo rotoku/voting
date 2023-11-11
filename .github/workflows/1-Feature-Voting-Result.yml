@@ -1,0 +1,85 @@
+name: "1. Feature Voting Result"
+
+on:
+  push:
+    branches:
+      - "feature**"
+
+jobs:
+  call-workflow-ci-java-gradle:
+    uses: kumabes-org/reusable-workflows-ci-java-gradle/.github/workflows/ci.yml@main
+    with:
+      runs-on: "ubuntu-latest"
+      environment: "development"
+      working-directory: "voting-result"
+      shell: "bash"
+      project-name: "voting-result"
+      java-distribution: "zulu"
+      java-version: "17"
+      gradle-version: "8.3"
+    secrets: inherit
+
+  # call-workflow-sonarqube:
+  #   needs:
+  #     - call-workflow-ci-java-gradle
+  #   uses: kumabes-org/reusable-workflows-sonarqube/.github/workflows/main.yml@main
+  #   with:
+  #     runs-on: "ubuntu-latest"
+  #     environment: "development"
+  #     working-directory: "voting-result"
+  #     shell: "bash"    
+  #     project-name: "voting-result"
+  #   secrets: inherit
+      
+  # call-workflow-codeql:
+  #   needs:
+  #     - call-workflow-ci-java-gradle
+  #   uses: kumabes-org/reusable-workflows-codeql/.github/workflows/main.yml@main
+  #   with:
+  #     runs-on: "ubuntu-latest"
+  #     environment: "development"
+  #     working-directory: "voting-result"
+  #     shell: "bash"    
+  #     project-name: "voting-result"
+  #     languages: "java"
+  #   secrets: inherit      
+
+  Build-Docker:
+    needs:
+      - call-workflow-ci-java-gradle
+    runs-on: ubuntu-latest
+    environment: development
+    defaults:
+      run:
+        shell: bash
+        working-directory: voting-result
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: "voting-result"
+          path: "./voting-result/build"
+    
+      - name: Display structure of downloaded files
+        run: |
+          pwd
+          ls -R
+  
+      - uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: "./voting-result/Dockerfile"
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Image
+        run: |
+          pwd
+          ls -lrth --color
+          docker image build -t voting-result:v1 .
+          docker tag voting-result:v1 rotoku/voting-result:v1
+          docker push rotoku/voting-result:v1

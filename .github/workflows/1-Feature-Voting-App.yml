@@ -1,4 +1,4 @@
-name: "1-Feature"
+name: "1. Feature Voting App"
 
 on:
   push:
