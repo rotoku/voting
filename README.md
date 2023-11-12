@@ -5,9 +5,6 @@
 ![Feature Voting Result](https://github.com/kumabes-org/voting/actions/workflows/1-Feature-Voting-Result.yml/badge.svg)
 ![Feature Voting Worker](https://github.com/kumabes-org/voting/actions/workflows/1-Feature-Voting-Worker.yml/badge.svg)
 
-## 1. voting-queue
-Fila responsável por receber as informações recebidas do formulário
-
 ## 1. voting-cache
 Cache responsável por receber as informações recebidas do formulário
 
@@ -18,8 +15,7 @@ Banco de dados responsável por armazenar a votação
 Formulário contento as opções das linguagens na qual o usuário utiliza
 
 ## 4. voting-worker
-- v1: Worker responsável por fazer retrieve do cache e persistir no banco de dados
-- v2: Worker responsável por fazer o pool da fila e persistir no banco de dados
+Worker responsável por fazer retrieve do cache e persistir no banco de dados
 
 ## 5. voting-result
 Página que exibe o resultado sumarizado da votação
