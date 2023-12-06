@@ -1,10 +1,10 @@
-package br.com.kumabe.votingworker;
+package br.com.kumabe.votingapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class VotingWorkerApplicationTests {
+class SpringAppTests {
 
 	@Test
 	void contextLoads() {

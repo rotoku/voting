@@ -1,13 +1,13 @@
-package br.com.kumabe.votingworker;
+package br.com.kumabe.votingresult;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class VotingWorkerApplication {
+public class SpringApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(VotingWorkerApplication.class, args);
+		SpringApplication.run(SpringApp.class, args);
 	}
 
 }

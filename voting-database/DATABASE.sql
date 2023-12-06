@@ -1,0 +1,1 @@
+CREATE DATABASE voting OWNER voting ENCODING 'UTF8';
