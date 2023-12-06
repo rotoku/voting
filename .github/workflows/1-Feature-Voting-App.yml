@@ -76,10 +76,28 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push Image
-        run: |
-          pwd
-          ls -lrth --color
-          docker image build -t voting-app:v1 .
-          docker tag voting-app:v1 rotoku/voting-app:v1
-          docker push rotoku/voting-app:v1
+      # - name: Build and Push Image
+      #   run: |
+      #     pwd
+      #     ls -lrth --color
+      #     docker image build -t voting-app:v1 .
+      #     docker tag voting-app:v1 rotoku/voting-app:v1
+      #     docker push rotoku/voting-app:v1
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: rotoku/voting-app
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+        with:
+          context: ./voting-app
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            rotoku/voting-app:${{ github.sha }}
+            rotoku/voting-app:latest
+          labels: ${{ steps.meta.outputs.labels }}
